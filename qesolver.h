@@ -118,4 +118,16 @@ char zero_roots(double a, double b, double c);
  */
 char zero_b_solution(double a, double b, double c);
 
+/*!
+ * @brief Swap function
+ *
+ * It swaps two double variables
+ *
+ * @param [out] <a> first number to swap
+ * @param [out] <b> second number to swap
+ *
+ * @version 0.1
+ */
+void swap(double* a, double* b);
+
 #endif // QESOLVER_INCLUDED

@@ -1,8 +1,16 @@
 #include "stdio.h"
 #include "qesolver.h"
+#include "unitests.h"
+
+/* #define UNITEST */
 
 int main() {
 
+#ifdef UNITEST
+    printf("%d\n", unit_test());
+#endif
+
+#ifndef UNITEST
     printf("Quadratic equasion solver.\n");
     printf("(c) Egor Osipov.\n");
     printf("Enter a, b, c coefficients:\n");
@@ -31,6 +39,7 @@ int main() {
         case INFINITE_NUMBER_OF_ROOTS:
             printf("Infinite number of roots :)\n");
     }
+#endif // UNITEST
 
     return 0;
 }

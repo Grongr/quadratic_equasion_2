@@ -45,12 +45,12 @@ int Solver(double a, double b, double c, double *x1, double *x2) {
     
     double sqrtD = sqrt(D);
 
-    *x1 = (-b + sqrtD) / 2 / a;
+    *x1 = (-b - sqrtD) / 2 / a;
 
     if (dcmp(D, 0.0) == 0)
         return 1;
 
-    *x2 = (-b - sqrtD) / 2 / a;
+    *x2 = (-b + sqrtD) / 2 / a;
 
     return 2;
 }
@@ -119,4 +119,10 @@ char infinite_solutions(double a, double b, double c) {
         return 1;
     else
         return 0;
+}
+
+void swap(double* a, double* b) {
+    double temp = *a;
+    *a = *b;
+    *b = temp;
 }

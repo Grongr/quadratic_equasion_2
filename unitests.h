@@ -3,14 +3,24 @@
 
 #include "stdio.h"
 
-#define TEST(num, a, b, c, x1, x2, scount)                      \
-{                                                               \
-    double xx1 = 0, xx2 = 0;                                    \
-    int count = Solver(a, b, c, &xx1, &xx2);                    \
-    if ((xx1 != x1 || xx2 != x2) && count != 0)                 \
-        return num;                                             \
-    else if (count != scount)                                   \
-        return num;                                             \
+#define TEST(num, a, b, c, x1, x2, scount)                           \
+{                                                                    \
+    double xx1 = 0, xx2 = 0;                                         \
+    int count = Solver(a, b, c, &xx1, &xx2);                         \
+    if ((xx1 != x1 || xx2 != x2) && count != 0) {                    \
+                                                                     \
+        printf("It should be <%d>, and it is <%d>", scount, count);  \
+        printf("Roots should be: %lg %lg\n", x1, x2);                \
+        printf("Your solution: %lg %lg\n", xx1, xx2);                \
+                                                                     \
+        return num;                                                  \
+    }                                                                \
+    else if (count != scount) {                                      \
+                                                                     \
+        printf("Number of roots are not the same.\n");               \
+        printf("It should be <%d>, but it is <%d>", scount, count);  \
+        return num;                                                  \
+    }                                                                \
 }
 
 /*!
