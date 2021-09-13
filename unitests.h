@@ -3,26 +3,6 @@
 
 #include "stdio.h"
 
-#define TEST(num, a, b, c, x1, x2, scount)                           \
-{                                                                    \
-    double xx1 = 0, xx2 = 0;                                         \
-    int count = Solver(a, b, c, &xx1, &xx2);                         \
-    if ((xx1 != x1 || xx2 != x2) && count != 0) {                    \
-                                                                     \
-        printf("It should be <%d>, and it is <%d>", scount, count);  \
-        printf("Roots should be: %lg %lg\n", x1, x2);                \
-        printf("Your solution: %lg %lg\n", xx1, xx2);                \
-                                                                     \
-        return num;                                                  \
-    }                                                                \
-    else if (count != scount) {                                      \
-                                                                     \
-        printf("Number of roots are not the same.\n");               \
-        printf("It should be <%d>, but it is <%d>", scount, count);  \
-        return num;                                                  \
-    }                                                                \
-}
-
 /*!
  * @brief Unit tests for quadratic equation
  *
@@ -41,6 +21,27 @@
  * @version 0.1
  * @authors Egor Osipov
  */
-int unit_test();
+int solver_test();
+
+/*!
+ * @brief Checks if test is passed correctly
+ *
+ * Depends on coefs a, b and c solves quadratic equation
+ * and then compare answere to correct (x1, x2, scount)
+ *
+ * @prarm [in] <num>    Number of test
+ * @param [in] <a>      First coefficient
+ * @param [in] <b>      Second coefficient
+ * @param [in] <c>      Therd coefficient
+ * @param [in] <x1>     First correct answere
+ * @param [in] <x2>     Second correct answere
+ * @prarm [in] <scount> Correct number of roots
+ *
+ * @return 0 if test is passed, <num> if not
+ *
+ * @version 0.1
+ */
+int is_correct(int num, double a, double b, double c,
+         double x1, double x2, int scount);
 
 #endif // UNTITESTS_INCLUDED

@@ -2,18 +2,18 @@
 #include "qesolver.h"
 #include "unitests.h"
 
-/* #define UNITEST */
+#define UNITEST
 
 int main() {
 
 #ifdef UNITEST
-    printf("%d\n", unit_test());
+    solver_test();
 #endif
 
 #ifndef UNITEST
-    printf("Quadratic equasion solver.\n");
-    printf("(c) Egor Osipov.\n");
-    printf("Enter a, b, c coefficients:\n");
+    puts("Quadratic equasion solver.");
+    puts("(c) Egor Osipov.");
+    puts("Enter a, b, c coefficients:");
 
     double a = 0, b = 0, c = 0;
     double x1 = 0, x2 = 0;
@@ -25,7 +25,7 @@ int main() {
     switch (RootsNumber) {
 
         case 0:
-            printf("There is no roots :(\n");
+            printf("There are no roots :(\n");
         break;
 
         case 1:
@@ -38,6 +38,11 @@ int main() {
 
         case INFINITE_NUMBER_OF_ROOTS:
             printf("Infinite number of roots :)\n");
+        break;
+
+        default:
+            puts("Something went wrong, could not find, what happened");
+        break;
     }
 #endif // UNITEST
 

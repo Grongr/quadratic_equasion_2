@@ -1,7 +1,10 @@
 #include "unitests.h"
 #include "qesolver.h"
 
-int unit_test() {
+#define TEST(num, a, b, c, x1, x2, scount) \
+    if (is_correct(num, a, b, c, x1, x2, scount)) return num;
+
+int solver_test() {
 
     //   num   a    b    c   x1    x2                RootsCount
     TEST(1,    0,   0,   0,  0.0,  0.0, INFINITE_NUMBER_OF_ROOTS)
@@ -12,3 +15,28 @@ int unit_test() {
 
     return 0;
 }
+
+int is_correct(int num, double a, double b, double c,
+               double x1, double x2, int scount) {
+
+    double xx1 = 0, xx2 = 0;
+    int count = Solver(a, b, c, &xx1, &xx2);
+    if ((xx1 != x1 || xx2 != x2) && count != 0) {
+
+        printf("In test number %d\n", num);
+        printf("It should be <%d>, and it is <%d>", scount, count);
+        printf("Roots should be: %lg %lg\n", x1, x2);
+        printf("Your solution: %lg %lg\n", xx1, xx2);
+
+        return num;
+    }
+    else if (count != scount) {
+
+        printf("Number of roots are not the same.\n");
+        printf("It should be <%d>, but it is <%d>", scount, count);
+        return num;
+    }
+    return 0;
+}
+
+#undef TEST
