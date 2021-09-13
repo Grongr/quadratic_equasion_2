@@ -24,20 +24,20 @@ int main() {
 
     switch (RootsNumber) {
 
-        case 0:
+        case ZERO_SOLUTIONS:
             printf("There are no roots :(\n");
         break;
 
-        case 1:
+        case ONE_SOLUTION:
             printf("There is only one answere: %.6lg\n", x1);
         break;
 
-        case 2:
+        case TWO_SOLUTIONS:
             printf("Answeres:\n%.6lg %.6lg\n", x1, x2);
         break;
 
         case INFINITE_NUMBER_OF_ROOTS:
-            printf("Infinite number of roots :)\n");
+            puts("Infinite number of roots :)");
         break;
 
         default:

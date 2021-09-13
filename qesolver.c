@@ -72,15 +72,27 @@ static char infinite_solutions(double a, double b, double c);
  */
 static char zero_b_solution(double a, double b, double c);
 
+/*!
+ * @brief If one of solutions is -0.
+ *
+ * It swaps coefficients, x1 is less then x2 in
+ * the end. If one of the solutions is -0, it becomes
+ * 0.0.
+ *
+ * @param [out] <x1> Pointer to the first solution
+ * @param [out] <x2> Pointer to the second solution
+ *
+ * @version 0.1
+ */
+static void minus_zero(double* x1, double *x2);
 
-int Solver(double a, double b, double c, double *x1, double *x2) {
+
+enum NumberOfRoots Solver(double a, double b, double c, double *x1, double *x2) {
 
     assert(x1 != NULL);
     assert(x2 != NULL);
 
     assert(x1 != x2 && "Pointers <x1> and <x2> are the same");
-
-    int RootsNumber = 0;
 
     if (infinite_solutions(a, b, c))
         return INFINITE_NUMBER_OF_ROOTS;
@@ -88,19 +100,19 @@ int Solver(double a, double b, double c, double *x1, double *x2) {
     if (is_linear(a, b)) {
 
         *x1 = -c / b;
-        return 1;
+        return ONE_SOLUTION;
 
     }
 
     if (zero_b_solution(a, b, c)) {
 
         *x1 = sqrt(-c / a);
-        return 1;
+        return ONE_SOLUTION;
 
     }
 
     if (zero_roots(a, b, c))
-        return 0;
+        return ZERO_SOLUTIONS;
 
     assert(isfinite(b * b) && "Too big or too small b value");
     assert(isfinite(4 * a * c) && "Too big or too small a or c value");
@@ -108,18 +120,20 @@ int Solver(double a, double b, double c, double *x1, double *x2) {
     double D = b * b - 4 * a * c;
 
     if (dcmp(D, 0.0) == -1)
-        return 0;
+        return ZERO_SOLUTIONS;
     
     double sqrtD = sqrt(D);
 
     *x1 = (-b - sqrtD) / 2 / a;
 
     if (dcmp(D, 0.0) == 0)
-        return 1;
+        return ONE_SOLUTION;
 
     *x2 = (-b + sqrtD) / 2 / a;
 
-    return 2;
+    minus_zero(x1, x2);
+
+    return TWO_SOLUTIONS;
 }
 
 void get_coefficients(double *a, double *b, double *c) {
@@ -161,6 +175,20 @@ int dcmp(double a, double b) {
         return -1;
 
     return 3;
+}
+
+static void minus_zero(double* x1, double* x2) {
+
+    *x1 = (dcmp(*x1, 0.0)) ? *x1 : 0.0;
+    *x2 = (dcmp(*x2, 0.0)) ? *x2 : 0.0;
+    
+    if (dcmp(*x1, *x2) == 1) {
+
+        double temp = *x1;
+        *x1 = *x2;
+        *x2 = temp;
+    }
+
 }
 
 static char is_linear(double a, double b) {

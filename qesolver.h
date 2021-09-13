@@ -1,7 +1,13 @@
 #ifndef QESOLVER_INCLUDED
 #define QESOLVER_INCLUDED
 
-#define INFINITE_NUMBER_OF_ROOTS 3
+
+enum NumberOfRoots {
+    ZERO_SOLUTIONS = 0,             //< Name says all you need
+    ONE_SOLUTION   = 1,             //< Name says all you need
+    TWO_SOLUTIONS  = 2,             //< Name says all you need
+    INFINITE_NUMBER_OF_ROOTS = 3    //< Name says all you need
+};
 
 /*!
  * @brief Quadratic equasion solver
@@ -20,7 +26,7 @@
  *
  * @version 0.1
  */
-int Solver(double a, double b, double c,
+enum NumberOfRoots Solver(double a, double b, double c,
            double* x1, double *x2);
 
 /*!

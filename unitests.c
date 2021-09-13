@@ -12,6 +12,7 @@ int solver_test() {
     TEST(3,    1,   0,   0,  0.0,  0.0,                        1)
     TEST(4,    1,  -5,   6,  2.0,  3.0,                        2)
     TEST(5,    1,   1,   0, -1.0,  0.0,                        2)
+    TEST(6,   -1,  -1,   0, -1.0,  0.0,                        2)
 
     return 0;
 }
@@ -24,7 +25,7 @@ int is_correct(int num, double a, double b, double c,
     if ((xx1 != x1 || xx2 != x2) && count != 0) {
 
         printf("In test number %d\n", num);
-        printf("It should be <%d>, and it is <%d>", scount, count);
+        printf("It should be <%d>, and it is <%d>\n", scount, count);
         printf("Roots should be: %lg %lg\n", x1, x2);
         printf("Your solution: %lg %lg\n", xx1, xx2);
 
