@@ -2,13 +2,6 @@
 #include "stdio.h"
 #include "math.h"
 
-/*
- * -D<name> <=> #define <name>
- *  
- *  example:
- *  -DNDEBUG <=>  #define NDEBUG
- *
- */
 /* #define NDEBUG //< define this if if don't want my asserts to work */
 #include "assert.h"
 
