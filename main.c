@@ -22,28 +22,7 @@ int main() {
 
     int RootsNumber = Solver(a, b, c, &x1, &x2);
 
-    switch (RootsNumber) {
-
-        case ZERO_SOLUTIONS:
-            printf("There are no roots :(\n");
-        break;
-
-        case ONE_SOLUTION:
-            printf("There is only one answere: %.6lg\n", x1);
-        break;
-
-        case TWO_SOLUTIONS:
-            printf("Answeres:\n%.6lg %.6lg\n", x1, x2);
-        break;
-
-        case INFINITE_NUMBER_OF_ROOTS:
-            puts("Infinite number of roots :)");
-        break;
-
-        default:
-            puts("Something went wrong, could not find, what happened");
-        break;
-    }
+    print_answere(RootsNumber, x1, x2);
 #endif // UNITEST
 
     return 0;

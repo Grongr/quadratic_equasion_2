@@ -75,7 +75,7 @@ static char zero_b_solution(double a, double b, double c);
 /*!
  * @brief If one of solutions is -0.
  *
- * It swaps coefficients, x1 is less then x2 in
+ * It swaps coefficients so that x1 is less then x2 in
  * the end. If one of the solutions is -0, it becomes
  * 0.0.
  *
@@ -134,6 +134,33 @@ enum NumberOfRoots Solver(double a, double b, double c, double *x1, double *x2) 
     minus_zero(x1, x2);
 
     return TWO_SOLUTIONS;
+}
+
+void print_answere(int RootsNumber, double x1, double x2) {
+
+    switch (RootsNumber) {
+
+        case ZERO_SOLUTIONS:
+            printf("There are no roots :(\n");
+        break;
+
+        case ONE_SOLUTION:
+            printf("There is only one answere: %.6lg\n", x1);
+        break;
+
+        case TWO_SOLUTIONS:
+            printf("Answeres:\n%.6lg %.6lg\n", x1, x2);
+        break;
+
+        case INFINITE_NUMBER_OF_ROOTS:
+            puts("Infinite number of roots :)");
+        break;
+
+        default:
+            puts("Something went wrong, could not find, what happened");
+        break;
+    }
+
 }
 
 void get_coefficients(double *a, double *b, double *c) {

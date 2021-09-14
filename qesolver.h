@@ -30,6 +30,19 @@ enum NumberOfRoots Solver(double a, double b, double c,
            double* x1, double *x2);
 
 /*!
+ * @brief Prints answere in normal way
+ *
+ * In case how many solutions there are,
+ * prints answere. x1 < x2
+ *
+ * @param [in] <RootsNumber> number of roots (check
+ *                           NumberOfRoots enum)
+ * @param [in] <x1>          first solution
+ * @param [in] <x2>          second solution
+ */
+void print_answere(int RootsNumber, double x1, double x2);
+
+/*!
  * @brief Safely gets coefficients
  *
  * Checks if coefficients are finite and
