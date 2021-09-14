@@ -1,8 +1,6 @@
 #ifndef UNTITESTS_INCLUDED
 #define UNTITESTS_INCLUDED
 
-#include "stdio.h"
-
 /*!
  * @brief Unit tests for quadratic equation
  *
@@ -42,6 +40,6 @@ int solver_test();
  * @version 0.1
  */
 int is_correct(int num, double a, double b, double c,
-         double x1, double x2, int scount);
+               double x1, double x2, int scount);
 
 #endif // UNTITESTS_INCLUDED

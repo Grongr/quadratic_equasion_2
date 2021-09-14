@@ -8,9 +8,7 @@ int main() {
 
 #ifdef UNITEST
     solver_test();
-#endif
-
-#ifndef UNITEST
+#else
     puts("Quadratic equasion solver.");
     puts("(c) Egor Osipov.");
     puts("Enter a, b, c coefficients:");

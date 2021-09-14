@@ -13,15 +13,15 @@
  * It is equation if it has a or b coefficient
  * not zero.
  *
- * @param [in] <a> First coef
- * @param [in] <b> Second coef
+ * @param [in] <s> Struct with comparation with
+ *                 zero results
  *
  * @return 1 if it is linear
  *         and 0 if not
  *
  * @version 0.1
  */
-static char is_linear(double a, double b);
+static char is_linear(const CoefsZeroCmp* s);
 
 /*!
  * @brief Checks if there is no solutions.
@@ -29,15 +29,14 @@ static char is_linear(double a, double b);
  * It checks if there may be solutions
  * based on coefs, not discriminant
  *
- * @param [in] <a> First coef
- * @param [in] <b> Second coef
- * @param [in] <c> Therd coef
+ * @param [in] <s> Struct with comparation with
+ *                 zero results
  *
  * @return 1 if there is no solutions
  *
  * @version 0.1
  */
-static char zero_roots(double a, double b, double c);
+static char zero_roots(const CoefsZeroCmp* s);
 
 
 /*!
@@ -45,32 +44,30 @@ static char zero_roots(double a, double b, double c);
  *
  * a, b and c must be zero coefs
  *
- * @param [in] <a> First coef
- * @param [in] <b> Second coef
- * @param [in] <c> Therd coef
+ * @param [in] <s> Struct with comparation with
+ *                 zero results
  *
  * @return 1 if infinit number
  *         0 if not
  * 
  * @version 0.1
  */
-static char infinite_solutions(double a, double b, double c);
+static char infinite_solutions(const CoefsZeroCmp* s);
 
 /*!
  * @brief Checks if there are solution with zero coef b
  *
  * If b coef is zero c coef must be less than zero
  *
- * @param [in] <a> First coef
- * @param [in] <b> Second coef
- * @param [in] <c> Therd coef
+ * @param [in] <s> Struct with comparation with
+ *                 zero results
  *
  * @return 1 b is zero and c is less than zero
  *         0 if not
  *
  * @version 0.1
  */
-static char zero_b_solution(double a, double b, double c);
+static char zero_b_solution(const CoefsZeroCmp* s);
 
 /*!
  * @brief If one of solutions is -0.
@@ -84,7 +81,19 @@ static char zero_b_solution(double a, double b, double c);
  *
  * @version 0.1
  */
-static void minus_zero(double* x1, double *x2);
+static void normal_solution_order(double* x1, double *x2);
+
+/*!
+ * @brief Do compare all the coefs with zero
+ *
+ * @param [in]  <a> First coef
+ * @param [in]  <b> Second coef
+ * @param [in]  <c> Therd coef
+ * @param [out] <s> Struct to save results
+ *
+ * @version 0.1
+ */
+static void coefs_beginning_cmp(double a, double b, double c, CoefsZeroCmp* s);
 
 
 enum NumberOfRoots Solver(double a, double b, double c, double *x1, double *x2) {
@@ -94,24 +103,28 @@ enum NumberOfRoots Solver(double a, double b, double c, double *x1, double *x2) 
 
     assert(x1 != x2 && "Pointers <x1> and <x2> are the same");
 
-    if (infinite_solutions(a, b, c))
+    CoefsZeroCmp compare_result = {-2, -2, -2};
+
+    coefs_beginning_cmp(a, b, c, &compare_result);
+
+    if (infinite_solutions(&compare_result))
         return INFINITE_NUMBER_OF_ROOTS;
 
-    if (is_linear(a, b)) {
+    if (is_linear(&compare_result)) {
 
         *x1 = -c / b;
         return ONE_SOLUTION;
 
     }
 
-    if (zero_b_solution(a, b, c)) {
+    if (zero_b_solution(&compare_result)) {
 
         *x1 = sqrt(-c / a);
         return ONE_SOLUTION;
 
     }
 
-    if (zero_roots(a, b, c))
+    if (zero_roots(&compare_result))
         return ZERO_SOLUTIONS;
 
     assert(isfinite(b * b) && "Too big or too small b value");
@@ -131,12 +144,12 @@ enum NumberOfRoots Solver(double a, double b, double c, double *x1, double *x2) 
 
     *x2 = (-b + sqrtD) / 2 / a;
 
-    minus_zero(x1, x2);
+    normal_solution_order(x1, x2);
 
     return TWO_SOLUTIONS;
 }
 
-void print_answere(int RootsNumber, double x1, double x2) {
+void print_answere(enum NumberOfRoots RootsNumber, double x1, double x2) {
 
     switch (RootsNumber) {
 
@@ -192,6 +205,13 @@ void get_coefficients(double *a, double *b, double *c) {
 
 }
 
+static void coefs_beginning_cmp(double a, double b, double c, CoefsZeroCmp* s) {
+
+    s->_a = dcmp(a, 0.0);
+    s->_b = dcmp(b, 0.0);
+    s->_c = dcmp(c, 0.0);
+}
+
 int dcmp(double a, double b) {
 
     if (fabs(a - b) <= epsilon)
@@ -204,7 +224,7 @@ int dcmp(double a, double b) {
     return 3;
 }
 
-static void minus_zero(double* x1, double* x2) {
+static void normal_solution_order(double* x1, double* x2) {
 
     *x1 = (dcmp(*x1, 0.0)) ? *x1 : 0.0;
     *x2 = (dcmp(*x2, 0.0)) ? *x2 : 0.0;
@@ -218,24 +238,24 @@ static void minus_zero(double* x1, double* x2) {
 
 }
 
-static char is_linear(double a, double b) {
+static char is_linear(const CoefsZeroCmp* s) {
 
-    return (!dcmp(a, 0.0) && dcmp(b, 0.0));
+    return (s->_a == 0 && s->_b != 0);
 }
 
-static char zero_roots(double a, double b, double c) {
+static char zero_roots(const CoefsZeroCmp* s) {
 
-    return (dcmp(a, 0.0) == 0 && dcmp(b, 0.0) == 0 && dcmp(c, 0.0) != 0);
+    return (s->_a == 0 && s->_b == 0 && s->_c != 0);
 }
 
-static char zero_b_solution(double a, double b, double c) {
+static char zero_b_solution(const CoefsZeroCmp* s) {
 
-    return (dcmp(b, 0.0) == 0 && dcmp(a, 0.0) != 0 && dcmp(c, 0.0) == -1);
+    return (s->_b == 0 && s->_a != 0 && s->_c == -1);
 }
 
-static char infinite_solutions(double a, double b, double c) {
+static char infinite_solutions(const CoefsZeroCmp* s) {
 
-    return (dcmp(a, 0.0) == 0 && dcmp(b, 0.0) == 0 && dcmp(c, 0.0) == 0);
+    return (s->_a == 0 && s->_b == 0 && s->_c == 0);
 }
 
 #undef epsilon
