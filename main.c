@@ -18,7 +18,7 @@ int main() {
 
     get_coefficients(&a, &b, &c);
 
-    int RootsNumber = Solver(a, b, c, &x1, &x2);
+    enum NumberOfRoots RootsNumber = Solver(a, b, c, &x1, &x2);
 
     print_answere(RootsNumber, x1, x2);
 #endif // UNITEST
