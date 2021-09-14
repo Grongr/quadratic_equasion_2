@@ -1,3 +1,4 @@
+#include "stdio.h"
 #include "unitests.h"
 #include "qesolver.h"
 
@@ -22,7 +23,7 @@ int is_correct(int num, double a, double b, double c,
 
     double xx1 = 0, xx2 = 0;
     int count = Solver(a, b, c, &xx1, &xx2);
-    if ((xx1 != x1 || xx2 != x2) && count != 0) {
+    if ((dcmp(xx1, x1) != 0 || dcmp(xx2, x2) != 0) && count != 0) {
 
         printf("In test number %d\n", num);
         printf("It should be <%d>, and it is <%d>\n", scount, count);

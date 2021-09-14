@@ -10,6 +10,22 @@ enum NumberOfRoots {
 };
 
 /*!
+ * @brief This struct is needed to avoid a lot of
+ *        comparations between double coefs.
+ * 
+ * If coef <name> is zero then <_name> becomes 0,
+ * if it is less then <_name> becomes -1 and if
+ * it is bigger, then 1. 
+ */
+struct CoefsZeroCmp {
+    int _a; //< Param for <a> coef
+    int _b; //< Param for <b> coef
+    int _c; //< Param for <c> coef
+};
+
+typedef struct CoefsZeroCmp CoefsZeroCmp;
+
+/*!
  * @brief Quadratic equasion solver
  *
  * Not as simple function to solve quadratic equasion
@@ -27,7 +43,7 @@ enum NumberOfRoots {
  * @version 0.1
  */
 enum NumberOfRoots Solver(double a, double b, double c,
-           double* x1, double *x2);
+                          double* x1, double *x2);
 
 /*!
  * @brief Prints answere in normal way
@@ -40,7 +56,7 @@ enum NumberOfRoots Solver(double a, double b, double c,
  * @param [in] <x1>          first solution
  * @param [in] <x2>          second solution
  */
-void print_answere(int RootsNumber, double x1, double x2);
+void print_answere(enum NumberOfRoots RootsNumber, double x1, double x2);
 
 /*!
  * @brief Safely gets coefficients
