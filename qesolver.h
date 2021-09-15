@@ -18,9 +18,9 @@ enum NumberOfRoots {
  * it is bigger, then 1. 
  */
 struct CoefsZeroCmp {
-    int _a; //< Param for <a> coef
-    int _b; //< Param for <b> coef
-    int _c; //< Param for <c> coef
+    int a_cmp; //< Param for <a> coef
+    int b_cmp; //< Param for <b> coef
+    int c_cmp; //< Param for <c> coef
 };
 
 typedef struct CoefsZeroCmp CoefsZeroCmp;

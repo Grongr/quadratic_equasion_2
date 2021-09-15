@@ -207,9 +207,9 @@ void get_coefficients(double *a, double *b, double *c) {
 
 static void coefs_beginning_cmp(double a, double b, double c, CoefsZeroCmp* s) {
 
-    s->_a = dcmp(a, 0.0);
-    s->_b = dcmp(b, 0.0);
-    s->_c = dcmp(c, 0.0);
+    s->a_cmp = dcmp(a, 0.0);
+    s->b_cmp = dcmp(b, 0.0);
+    s->c_cmp = dcmp(c, 0.0);
 }
 
 int dcmp(double a, double b) {
@@ -240,22 +240,22 @@ static void normal_solution_order(double* x1, double* x2) {
 
 static char is_linear(const CoefsZeroCmp* s) {
 
-    return (s->_a == 0 && s->_b != 0);
+    return (s->a_cmp == 0 && s->b_cmp != 0);
 }
 
 static char zero_roots(const CoefsZeroCmp* s) {
 
-    return (s->_a == 0 && s->_b == 0 && s->_c != 0);
+    return (s->a_cmp == 0 && s->b_cmp == 0 && s->c_cmp != 0);
 }
 
 static char zero_b_solution(const CoefsZeroCmp* s) {
 
-    return (s->_b == 0 && s->_a != 0 && s->_c == -1);
+    return (s->b_cmp == 0 && s->a_cmp != 0 && s->c_cmp == -1);
 }
 
 static char infinite_solutions(const CoefsZeroCmp* s) {
 
-    return (s->_a == 0 && s->_b == 0 && s->_c == 0);
+    return (s->a_cmp == 0 && s->b_cmp == 0 && s->c_cmp == 0);
 }
 
 #undef epsilon
