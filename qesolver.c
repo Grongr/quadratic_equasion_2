@@ -183,18 +183,27 @@ void get_coefficients(double *a, double *b, double *c) {
     assert(a != b && "Pointers <a> and <b> are the same");
 
     int input_size = scanf("%lg %lg %lg", a, b, c);
-    if (!(isfinite(*a) && isfinite(*b) && isfinite(*c)))
+
+    if (!(isfinite(*a) && isfinite(*b) && isfinite(*c))) {
+
         input_size = 0;
+        puts("One of coefs you written is infinite");
+
+    }
 
     while (input_size != 3) {
 
         while (getchar() != '\n');
 
-        printf("Wrong input, try again:\n");
+        puts("Wrong input, try again:");
         input_size = scanf("%lg %lg %lg", a, b, c);
 
-        if (!(isfinite(*a) && isfinite(*b) && isfinite(*c)))
+        if (!(isfinite(*a) && isfinite(*b) && isfinite(*c))) {
+
             input_size = 0;
+            puts("One of coefs you written is infinite");
+
+        }
 
     }
 
