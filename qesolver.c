@@ -2,7 +2,7 @@
 #include "stdio.h"
 #include "math.h"
 
-/* #define NDEBUG //< define this if if don't want my asserts to work */
+#define NDEBUG //< define this if if don't want my asserts to work
 #include "assert.h"
 
 #define epsilon 1e-7 //< Uses in dcmp to compare doubles
@@ -178,10 +178,13 @@ void print_answere(enum NumberOfRoots RootsNumber, double x1, double x2) {
 
 void get_coefficients(double *a, double *b, double *c) {
 
-    assert(a != b);
-    assert(b != c);
+    assert(a != b && "Pointers <a> and <b> are the same");
+    assert(b != c && "Pointers <b> and <c> are the same");
+    assert(a != b && "Pointers <a> and <b> are the same");
 
     int input_size = scanf("%lg %lg %lg", a, b, c);
+    if (!(isfinite(*a) && isfinite(*b) && isfinite(*c)))
+        input_size = 0;
 
     while (input_size != 3) {
 
@@ -190,11 +193,10 @@ void get_coefficients(double *a, double *b, double *c) {
         printf("Wrong input, try again:\n");
         input_size = scanf("%lg %lg %lg", a, b, c);
 
-    }
+        if (!(isfinite(*a) && isfinite(*b) && isfinite(*c)))
+            input_size = 0;
 
-    assert(isfinite(*a));
-    assert(isfinite(*b));
-    assert(isfinite(*c));
+    }
 
     if (dcmp(*a, 0.0) == -1) {
 
